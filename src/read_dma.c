@@ -62,9 +62,19 @@ int main(int argc, char *argv[])
   	}
 	unsigned char input1 = buf[0];
 	unsigned char input2 = buf[1];
-	unsigned char input3 = buf[2];
-	unsigned char cmd_blk[CMD_LEN] = {input1, input2, input3, 0, 0, (1>>8), 
-		1, (lba>>8), lba, (lba>>24), (lba>>16), 0, 0, 0x40, 0x25, 0};
+	FILE *fptr = NULL;
+	fptr = fopen("/root/qemu/text.txt", "a");
+	if (fptr == NULL) {
+		printf("fail");
+		return 0;
+	}
+	fputs(buf, fptr);
+	fputs("\n", fptr);
+
+	//unsigned char cmd_blk[CMD_LEN] = {0x85, 0x0D, input1, 0, 0, (1>>8), 
+	//	1, (lba>>8), lba, (lba>>24), (lba>>16), 0, 0, 0x40, input2, 0};
+	unsigned char cmd_blk[CMD_LEN] = {0x85, 0x0D, 0x2E, 0, 0, (1>>8), 
+		1, (lba>>8), lba, (lba<<24), (lba>>16), 0, 0, 0x40, 0x25, 0};
 	if ((device_ = open(DEVICE_NODE, O_RDWR)) < 0) {
 		printf("%d\n", device_);
 		return 1;
