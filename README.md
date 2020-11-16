@@ -29,3 +29,10 @@ CONFIG_KASAN_INLINE=y
 CONFIG_CONFIGFS_FS=y
 
 CONFIG_SECURITYFS=y
+
+# Whenever Needed
+
+make CC="$GCC/bin/gcc" olddefconfig
+
+# 9P Instructions
+https://wiki.qemu.org/Documentation/9psetup
