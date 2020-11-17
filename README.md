@@ -36,3 +36,7 @@ make CC="$GCC/bin/gcc" olddefconfig
 
 # 9P Instructions
 https://wiki.qemu.org/Documentation/9psetup
+
+
+# Final AFL Command
+afl-fuzz -i afl_in -o afl_out ./programtorun @@
