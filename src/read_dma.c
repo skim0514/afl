@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 	while (fgets(line, sizeof(line), file)) {
 		unsigned char input1 = line[0];
 		unsigned char input2 = line[1];
-		ata_run(input1, input2, buffer, sense_buffer);
+		printf("%d", ata_run(input1, input2, buffer, sense_buffer));
 	}
 	
 	FILE *fptr = NULL;
