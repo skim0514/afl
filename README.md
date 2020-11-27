@@ -33,6 +33,7 @@ CONFIG_SECURITYFS=y
 # Whenever Needed
 
 make CC="$GCC/bin/gcc" olddefconfig
+
 cat /etc/udev/rules.d/10-rename-network.rules
 SUBSYSTEM=="net", ACTION=="add", ATTR{address}="52:54:00:12:34:56", NAME="eth0"
 
