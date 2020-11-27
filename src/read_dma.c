@@ -31,46 +31,12 @@
 // 	printk(KERN_ALERT"Goodbye\n");
 // }
 
-int main(int argc, char *argv[])
-{
-    
-	char buf[BUFLEN];
-	FILE *file;
-
-    file = fopen(argv[1], "r");
-	if (!file) {
-		fprintf(stderr, "[-] ERROR: Failed to open a file [%s]\n", argv[1]);
-		return -1;
-	}
-
-	
-
-	char c;
-    unsigned char buffer[LBA_SIZE*1];
-    unsigned char sense_buffer[32];
-    sg_io_hdr_t io_hdr;
+int ata_run(unsigned char input1, unsigned char input2, unsigned char buffer[], unsigned char sense_buffer[]) {
 	int device_, k, ok;
 	int i;
-	int j;
+	sg_io_hdr_t io_hdr;
+	
 	int lba = 1;
-	int no_of_blocks = 1;
-	for (j = 0; j<BUFLEN; j++) {
-	    c = getc(file);
-	    if (c == EOF)
-	    	break;
-	    buf[j] = c;
-  	}
-	unsigned char input1 = buf[0];
-	unsigned char input2 = buf[1];
-	FILE *fptr = NULL;
-	//fptr = fopen("/root/qemu/text.txt", "a");
-	//if (fptr == NULL) {
-	//	printf("fail");
-	//	return 0;
-	//}
-	//fputs(buf, fptr);
-	//fputs("\n", fptr);
-
 	unsigned char cmd_blk[CMD_LEN] = {0x85, 0x0D, input1, 0, 0, (1>>8), 
 		1, (lba>>8), lba, (lba>>24), (lba>>16), 0, 0, 0x40, input2, 0};
 	//unsigned char cmd_blk[CMD_LEN] = {0x85, 0x0D, 0x2E, 0, 0, (1>>8), 
@@ -113,5 +79,54 @@ int main(int argc, char *argv[])
 	printf("\n*********duration = %d\n", io_hdr.duration);
 
 	return 1;
-
 }
+
+int main(int argc, char *argv[])
+{
+    
+	char buf[BUFLEN];
+	FILE *file;
+
+    file = fopen(argv[1], "r");
+	if (!file) {
+		fprintf(stderr, "[-] ERROR: Failed to open a file [%s]\n", argv[1]);
+		return -1;
+	}
+
+	
+
+	char c;
+	int j;
+    unsigned char buffer[LBA_SIZE*1];
+    unsigned char sense_buffer[32];
+	char line[256];
+    sg_io_hdr_t io_hdr;
+	
+	int no_of_blocks = 1;
+	for (j = 0; j<BUFLEN; j++) {
+	    c = getc(file);
+	    if (c == EOF)
+	    	break;
+	    buf[j] = c;
+  	}
+	while (fgets(line, sizeof(line), file)) {
+		unsigned char input1 = line[0];
+		unsigned char input2 = line[1];
+		ata_run(input1, input2, buffer, sense_buffer);
+	}
+	
+	FILE *fptr = NULL;
+	//fptr = fopen("/root/qemu/text.txt", "a");
+	//if (fptr == NULL) {
+	//	printf("fail");
+	//	return 0;
+	//}
+	//fputs(buf, fptr);
+	//fputs("\n", fptr);
+
+
+
+	return 1;
+
+} 
+
