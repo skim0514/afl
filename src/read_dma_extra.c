@@ -109,12 +109,16 @@ int main(int argc, char *argv[])
 //	    	break;
 //	    buf[j] = c;
   //	}
+  	int count;
+	count = 0;
 	while (fgets(line, sizeof(line), file)) {
 		unsigned char input1 = line[0];
 		unsigned char input2 = line[1];
 		printf("%d", ata_run(input1, input2, buffer, sense_buffer));
+		count++;
 	}
 	
+
 	FILE *fptr = NULL;
 	//fptr = fopen("/root/qemu/text.txt", "a");
 	//if (fptr == NULL) {
@@ -125,7 +129,7 @@ int main(int argc, char *argv[])
 	//fputs("\n", fptr);
 
 
-
+	printf("%d", count);
 	return 1;
 
 } 
