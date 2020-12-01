@@ -41,6 +41,16 @@ CONFIG_CONFIGFS_FS=y
 
 CONFIG_SECURITYFS=y
 
+# For 9p
+
+    CONFIG_NET_9P=y
+    CONFIG_NET_9P_VIRTIO=y
+    CONFIG_NET_9P_DEBUG=y (Optional)
+    CONFIG_9P_FS=y
+    CONFIG_9P_FS_POSIX_ACL=y
+    CONFIG_PCI=y
+    CONFIG_VIRTIO_PCI=y
+
 # Whenever Needed
 
 make CC="$GCC/bin/gcc" olddefconfig
