@@ -68,3 +68,4 @@ afl-fuzz -i afl_in -o afl_out ./programtorun @@
 # Result
 
 Error happened on file with 200 lines. Happened after running a-d, and then running a again. 
+On 50 lines, ran a-d twice, no results
