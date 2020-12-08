@@ -35,6 +35,8 @@ int ata_run(unsigned char input1, unsigned char input2, unsigned char buffer[], 
 	int device_, k, ok;
 	int i;
 	sg_io_hdr_t io_hdr;
+
+	printf("%d - %d", input1, input2);
 	
 	int lba = 1;
 	unsigned char cmd_blk[CMD_LEN] = {0x85, 0x0D, input1, 0, 0, (1>>8), 
