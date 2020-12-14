@@ -114,10 +114,17 @@ int main(int argc, char *argv[])
   	int count;
 	count = 0;
 	while (fgets(line, sizeof(line), file)) {
-		unsigned char input1 = line[0];
-		unsigned char input2 = line[1];
-		printf("%d", ata_run(input1, input2, buffer, sense_buffer));
-		count++;
+		int one;
+
+		for (one = 0; one < 2; one++) {
+			
+			unsigned char input1;
+			if (one == 0) input1 = 0x26;
+			else input1 = 0x2E;
+			unsigned char input2 = line[1];
+			printf("%d", ata_run(input1, input2, buffer, sense_buffer));
+			count++;
+		}
 	}
 	
 
